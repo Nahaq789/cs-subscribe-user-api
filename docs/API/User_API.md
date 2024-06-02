@@ -24,8 +24,6 @@ DDD + CQRS
 
 Route: api/v1/[controller 名]
 
-- login
-- logout
 - create
 - update
 - delete
@@ -34,19 +32,23 @@ Route: api/v1/[controller 名]
 #### リクエスト
 
 - `GET /api/v1/get/{id}`
-- `POST /api/v1/login`
-- `POST /api/v1/logout`
 - `POST /api/v1/create`
 - `PUT /api/v1/update`
 - `DELETE /api/v1/delete`
 
 #### パラメータ
 
-#### get
+#### GET
 
 | key | value |
 | --- | ----- |
-| id  | TD    |
+| id  | UserId |
+
+#### POST
+
+| key | value |
+| --- | ----- |
+| id  | UserId |
 
 #### レスポンス
 

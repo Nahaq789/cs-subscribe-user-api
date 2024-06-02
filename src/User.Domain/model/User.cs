@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace User.API.domain;
+namespace User.domain.model;
 
 [Table("User")]
 public class UserEntity

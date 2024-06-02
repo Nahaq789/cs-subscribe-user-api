@@ -1,7 +1,6 @@
+using System.Data.Common;
 using Microsoft.EntityFrameworkCore;
-
-using User.API.domain;
-
+using User.domain.model;
 namespace User.API.infrastructure;
 
 public class UserContext : DbContext
