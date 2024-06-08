@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace User.domain.model;
 
+/// <summary>
+/// ユーザーテーブルの定義
+/// </summary>
 [Table("User")]
 public class UserEntity
 {
@@ -27,15 +30,24 @@ public class UserEntity
     public string Password { get; private set; }
 
     /// <summary>
+    /// 年齢
+    /// </summary>
+    [Required]
+    public int Age { get; private set; }
+
+    /// <summary>
     /// コンストラクタ
     /// </summary>
     /// <param name="userId">ユーザーID</param>
     /// <param name="email">メールアドレス</param>
     /// <param name="password">パスワード</param>
-    public UserEntity(long userId, string email, string password)
+    /// <param name="age">年齢</param>
+    /// <param name="salt">ソルト</param>
+    public UserEntity(long userId, string email, string password, int age)
     {
         this.UserId = userId;
         this.Email = email;
         this.Password = password;
+        this.Age = age;
     }
 }
