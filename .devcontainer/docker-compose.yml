@@ -1,3 +1,4 @@
+version: '3.8'
 services:
   cs-subscribe-user-api-dev:
     build:
@@ -7,3 +8,14 @@ services:
       - ../:/app/user_api
     tty: true
     working_dir: /app/user_api
+
+  cs-subscribe-user-db:
+    container_name: user-postgres-db
+    image: postgres:alpine3.20
+    environment:
+      POSTGRES_USER: 'root'
+      POSTGRES_PASSWORD: 'root'
+    volumes:
+      - ./postgres:/app/user_api
+    ports:
+      - 6078:5432
