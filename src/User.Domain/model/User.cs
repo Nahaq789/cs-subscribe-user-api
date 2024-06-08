@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace User.domain.model;
 
 /// <summary>
-/// ユーザーテーブルの定義
+/// ユーザー情報
 /// </summary>
 [Table("User")]
 public class UserEntity
