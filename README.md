@@ -8,6 +8,8 @@
 
 - Dev Container
 - Remote Explorer
+- C#
+- C# dev kit
 
 # .NET 起動方法
 
