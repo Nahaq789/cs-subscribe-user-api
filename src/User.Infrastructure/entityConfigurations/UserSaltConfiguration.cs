@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using User.domain.model;
-using YourNamespace;
 
 namespace User.Infrastructure.entityConfigurations;
 
