@@ -32,3 +32,18 @@
    ```bash
    8.0.300 と表示されれば OK
    ```
+
+# マイグレーション
+1. User.APIディレクトリで以下のコマンドを実行
+
+   ```bash
+   dotnet ef migrations add init --project ../User.Infrastructure/User.Infrastructure.csproj
+   ```
+   Migrationフォルダが作成される。
+
+2. 作成された内容をDBに反映する
+
+   ```bash
+   dotnet ef database update --project ../User.Infrastructure/User.Infrastructure.csproj
+   ```
+
