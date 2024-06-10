@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using User.domain.model;
 using YourNamespace;
 
 namespace User.Infrastructure.entityConfigurations;
@@ -14,8 +15,15 @@ public class UserSaltConfiguration : IEntityTypeConfiguration<UserSalt>
             .HasColumnName("salt_id")
             .ValueGeneratedOnAdd();
 
-        userSaltConfiguration.
+        userSaltConfiguration.HasOne<UserAggregate>()
+            .WithOne()
+            .HasForeignKey<UserSalt>(p => p.UserAggregateId)
+            .IsRequired();
 
+        userSaltConfiguration.Property(e => e.UserAggregateId)
+            .HasColumnName("user_aggregate_id");
 
+        userSaltConfiguration.Property(e => e.Salt)
+            .HasColumnName("salt");
     }
 }
