@@ -6,7 +6,6 @@ namespace User.domain.model;
 /// <summary>
 /// ユーザー情報
 /// </summary>
-[Table("User")]
 public class UserEntity
 {
     /// <summary>
