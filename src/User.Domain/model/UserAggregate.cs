@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations.Schema;
-using YourNamespace;
 
 namespace User.domain.model;
 
@@ -48,4 +47,7 @@ public class UserAggregate
         this.User = user;
         this.Salt = salt;
     }
+
+    // マイグレーション時のみコメントアウト外す
+    //public UserAggregate() { }
 }
