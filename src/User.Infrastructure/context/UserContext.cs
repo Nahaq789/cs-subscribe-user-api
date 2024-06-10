@@ -1,7 +1,8 @@
 using System.Data.Common;
 using Microsoft.EntityFrameworkCore;
 using User.domain.model;
-using YourNamespace;
+using User.Infrastructure.entityConfigurations;
+
 namespace User.API.infrastructure;
 
 public class UserContext : DbContext
@@ -14,5 +15,13 @@ public class UserContext : DbContext
     public UserContext(DbContextOptions<UserContext> options) : base(options)
     {
 
+    }
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        builder.ApplyConfiguration(new UserConfiguration());
+        builder.ApplyConfiguration(new UserSaltConfiguration());
+        builder.ApplyConfiguration(new UserAggregateConfiguration());
+        base.OnModelCreating(builder);
     }
 }
