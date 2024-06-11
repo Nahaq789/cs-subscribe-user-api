@@ -6,7 +6,7 @@ namespace User.API.application.command;
 /// ユーザ作成コマンドです。
 /// </summary>
 [DataContract]
-public class CreateUserCommand : IRequest
+public class CreateUserCommand : IRequest<string>
 {
     [DataMember]
     public Guid UserId { get; private set; }
