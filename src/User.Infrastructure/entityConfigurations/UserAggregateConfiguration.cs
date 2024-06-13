@@ -4,7 +4,7 @@ using User.domain.model;
 
 namespace User.Infrastructure.entityConfigurations;
 
-public class UserAggregateConfiguration : IEntityTypeConfiguration<UserAggregate>
+internal class UserAggregateConfiguration : IEntityTypeConfiguration<UserAggregate>
 {
     public void Configure(EntityTypeBuilder<UserAggregate> userAggregateConfiguration)
     {

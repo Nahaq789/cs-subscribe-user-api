@@ -4,7 +4,7 @@ using User.domain.model;
 
 namespace User.Infrastructure.entityConfigurations;
 
-public class UserSaltConfiguration : IEntityTypeConfiguration<UserSalt>
+internal class UserSaltConfiguration : IEntityTypeConfiguration<UserSalt>
 {
     public void Configure(EntityTypeBuilder<UserSalt> userSaltConfiguration)
     {
