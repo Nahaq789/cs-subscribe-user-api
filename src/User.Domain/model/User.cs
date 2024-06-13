@@ -41,7 +41,6 @@ public class UserEntity
     /// <param name="email">メールアドレス</param>
     /// <param name="password">パスワード</param>
     /// <param name="age">年齢</param>
-    /// <param name="salt">ソルト</param>
     public UserEntity(long userId, string email, string password, int age)
     {
         this.UserId = userId;
