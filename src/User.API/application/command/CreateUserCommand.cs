@@ -6,10 +6,10 @@ namespace User.API.application.command;
 /// ユーザ作成コマンドです。
 /// </summary>
 [DataContract]
-public class CreateUserCommand : IRequest<string>
+public class CreateUserCommand : IRequest<Guid>
 {
     [DataMember]
-    public Guid UserId { get; private set; }
+    public long UserId { get; private set; }
     [DataMember]
     public string Name { get; private set; }
     [DataMember]
@@ -18,16 +18,13 @@ public class CreateUserCommand : IRequest<string>
     public string Password { get; private set; }
     [DataMember]
     public int Age { get; private set; }
-    [DataMember]
-    public string Salt { get; private set; }
 
-    public CreateUserCommand(Guid userId, string name, string email, string password, int age, string salt)
+    public CreateUserCommand(long userId, string name, string email, string password, int age)
     {
         this.UserId = userId;
         this.Name = name;
         this.Email = email;
         this.Password = password;
         this.Age = age;
-        this.Salt = salt;
     }
 }
