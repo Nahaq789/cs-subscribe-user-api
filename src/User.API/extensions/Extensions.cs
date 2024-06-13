@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using User.API.application.service;
 using User.API.infrastructure;
 using User.domain.model;
+using User.Infrastructure.repository;
 
 namespace User.API.extensions;
 
@@ -23,6 +24,7 @@ public static class Extensions
             cfg.RegisterServicesFromAssemblyContaining(typeof(Program));
         });
 
+        builder.Services.AddTransient<IUserRepository, UserRepository>();
         builder.Services.AddTransient<ICryptoPasswordService, CryptoPasswordService>();
         builder.Services.AddTransient<IJwtTokenService, JwtTokenService>();
 
