@@ -1,12 +1,13 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using User.Domain.seedWork;
 
 namespace User.domain.model;
 
 /// <summary>
 /// ユーザー情報
 /// </summary>
-public class UserEntity
+public class UserEntity : Entity
 {
     /// <summary>
     /// 主キー ユーザーID
