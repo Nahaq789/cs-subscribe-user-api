@@ -9,10 +9,8 @@ internal class UserConfiguration : IEntityTypeConfiguration<UserEntity>
     public void Configure(EntityTypeBuilder<UserEntity> userEntityConfiguration)
     {
         userEntityConfiguration.ToTable("user");
-        userEntityConfiguration.HasKey(p => p.UserId);
-        userEntityConfiguration.Property(p => p.UserId)
-            .HasColumnName("user_id")
-            .ValueGeneratedOnAdd();
+        userEntityConfiguration.Property(u => u.Id).UseHiLo("userseq");
+        userEntityConfiguration.Ignore(b => b.DomainEvents);
 
         userEntityConfiguration.Property(e => e.Email)
             .HasColumnName("email")

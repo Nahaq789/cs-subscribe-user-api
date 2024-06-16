@@ -9,19 +9,9 @@ internal class UserSaltConfiguration : IEntityTypeConfiguration<UserSalt>
     public void Configure(EntityTypeBuilder<UserSalt> userSaltConfiguration)
     {
         userSaltConfiguration.ToTable("user_salt");
-        userSaltConfiguration.HasKey(p => p.SaltId);
-        userSaltConfiguration.Property(p => p.SaltId)
-            .HasColumnName("salt_id")
-            .ValueGeneratedOnAdd();
-
-        userSaltConfiguration.HasOne<UserAggregate>()
-            .WithOne()
-            .HasForeignKey<UserSalt>(p => p.UserAggregateId)
-            .IsRequired();
-
-        userSaltConfiguration.Property(e => e.UserAggregateId)
-            .HasColumnName("user_aggregate_id");
-
+        userSaltConfiguration.Property(u => u.Id).UseHiLo("userseq");
+        userSaltConfiguration.Ignore(b => b.DomainEvents);
+        
         userSaltConfiguration.Property(e => e.Salt)
             .HasColumnName("salt");
     }
