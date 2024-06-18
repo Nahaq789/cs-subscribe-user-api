@@ -16,6 +16,7 @@ internal class UserSaltConfiguration : IEntityTypeConfiguration<UserSalt>
 
         userSaltConfiguration.Property(p => p.SaltId)
             .HasColumnName("salt_id")
+            .ValueGeneratedOnAdd()
             .IsRequired();
         userSaltConfiguration.Property(e => e.Salt)
             .HasColumnName("salt")

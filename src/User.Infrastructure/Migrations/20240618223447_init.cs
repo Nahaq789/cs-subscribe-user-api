@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -11,12 +12,8 @@ namespace User.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.EnsureSchema(
-                name: "users");
-
             migrationBuilder.CreateTable(
                 name: "user_aggregate",
-                schema: "users",
                 columns: table => new
                 {
                     user_aggregate_id = table.Column<Guid>(type: "uuid", nullable: false)
@@ -28,10 +25,10 @@ namespace User.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "user",
-                schema: "users",
                 columns: table => new
                 {
-                    user_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    user_id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
                     email = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
                     password = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
@@ -44,7 +41,6 @@ namespace User.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_user_user_aggregate_user_aggregate_id",
                         column: x => x.user_aggregate_id,
-                        principalSchema: "users",
                         principalTable: "user_aggregate",
                         principalColumn: "user_aggregate_id",
                         onDelete: ReferentialAction.Cascade);
@@ -52,10 +48,10 @@ namespace User.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "user_salt",
-                schema: "users",
                 columns: table => new
                 {
-                    salt_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    salt_id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     salt = table.Column<string>(type: "text", nullable: false),
                     user_aggregate_id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
@@ -65,7 +61,6 @@ namespace User.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_user_salt_user_aggregate_user_aggregate_id",
                         column: x => x.user_aggregate_id,
-                        principalSchema: "users",
                         principalTable: "user_aggregate",
                         principalColumn: "user_aggregate_id",
                         onDelete: ReferentialAction.Restrict);
@@ -73,14 +68,12 @@ namespace User.Infrastructure.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_user_user_aggregate_id",
-                schema: "users",
                 table: "user",
                 column: "user_aggregate_id",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_user_salt_user_aggregate_id",
-                schema: "users",
                 table: "user_salt",
                 column: "user_aggregate_id",
                 unique: true);
@@ -90,16 +83,13 @@ namespace User.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "user",
-                schema: "users");
+                name: "user");
 
             migrationBuilder.DropTable(
-                name: "user_salt",
-                schema: "users");
+                name: "user_salt");
 
             migrationBuilder.DropTable(
-                name: "user_aggregate",
-                schema: "users");
+                name: "user_aggregate");
         }
     }
 }

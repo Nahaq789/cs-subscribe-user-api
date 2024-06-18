@@ -33,8 +33,8 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, bool>
         var userAggregate = new UserAggregate(Guid.NewGuid());
         var salt = _cryptoPasswordService.CreateSalt();
 
-        userAggregate.setUser(Guid.NewGuid(), command.Name, command.Email, command.Password, command.Age, userAggregate.UserAggregateId);
-        userAggregate.setSalt(Guid.NewGuid(), salt, userAggregate.UserAggregateId);
+        userAggregate.setUser(command.Name, command.Email, command.Password, command.Age, userAggregate.UserAggregateId);
+        userAggregate.setSalt(salt, userAggregate.UserAggregateId);
         await _userRepository.CreateUser(userAggregate);
         return await _userRepository.UnitOfWork.SaveEntityAsync(cancellationToken);
     }

@@ -35,14 +35,14 @@ public class UserAggregate : Entity, IAggregateRoot
         this._salt = new UserSalt();
     }
 
-    public void setUser(Guid userId, string name, string email, string password, int age, Guid aggregateId)
+    public void setUser(string name, string email, string password, int age, Guid aggregateId)
     {
-        var user = new UserEntity(userId, name, email, password, age, aggregateId);
+        var user = new UserEntity(name, email, password, age, aggregateId);
         this._user = user;
     }
-    public void setSalt(Guid saltId, string Salt, Guid aggregateId)
+    public void setSalt(string Salt, Guid aggregateId)
     {
-        var salt = new UserSalt(saltId, Salt, aggregateId);
+        var salt = new UserSalt(Salt, aggregateId);
         this._salt = salt;
     }
 

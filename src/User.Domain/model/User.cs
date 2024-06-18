@@ -9,7 +9,7 @@ namespace User.domain.model;
 /// </summary>
 public class UserEntity : Entity
 {
-    public Guid UserId { get; private set; }
+    public long UserId { get; private set; }
     /// <summary>
     /// ユーザー名
     /// </summary>
@@ -46,9 +46,9 @@ public class UserEntity : Entity
     /// <param name="email">メールアドレス</param>
     /// <param name="password">パスワード</param>
     /// <param name="age">年齢</param>
-    public UserEntity(Guid userId, string name, string email, string password, int age, Guid aggregateId)
+    public UserEntity(string name, string email, string password, int age, Guid aggregateId)
     {
-        this.UserId = userId;
+        //this.UserId = userId;
         this.Name = name;
         this.Email = email;
         this.Password = password;

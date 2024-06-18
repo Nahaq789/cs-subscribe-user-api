@@ -9,7 +9,7 @@ namespace User.domain.model;
 /// </summary>
 public class UserSalt : Entity
 {
-    public Guid SaltId { get; private set; }
+    public long SaltId { get; private set; }
     /// <summary>
     /// パスワードハッシュ化に使用するソルト文字列を取得します。
     /// </summary>
@@ -27,9 +27,9 @@ public class UserSalt : Entity
     /// </summary>
     /// <param name="salt">パスワードハッシュ化に使用するソルト文字列。</param>
     /// <param name="aggregateId">ユーザー集約ID</param>
-    public UserSalt(Guid saltId, string salt, Guid aggregateId)
+    public UserSalt(string salt, Guid aggregateId)
     {
-        this.SaltId = saltId;
+        //this.SaltId = saltId;
         this.Salt = salt;
         this.AggregateId = aggregateId;
     }

@@ -14,6 +14,7 @@ internal class UserConfiguration : IEntityTypeConfiguration<UserEntity>
 
         userEntityConfiguration.Property(p => p.UserId)
             .HasColumnName("user_id")
+            .ValueGeneratedOnAdd()
             .IsRequired();
         userEntityConfiguration.HasKey(p => p.UserId);
 

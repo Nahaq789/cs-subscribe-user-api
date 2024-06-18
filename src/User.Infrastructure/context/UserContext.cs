@@ -23,7 +23,7 @@ public class UserContext : DbContext, IUnitOfWork
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        builder.HasDefaultSchema("users");
+        //builder.HasDefaultSchema("users");
         // base.OnModelCreating(builder);
         builder.ApplyConfiguration(new UserConfiguration());
         builder.ApplyConfiguration(new UserSaltConfiguration());

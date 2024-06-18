@@ -17,7 +17,6 @@ namespace User.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("users")
                 .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -32,15 +31,17 @@ namespace User.Infrastructure.Migrations
 
                     b.HasKey("UserAggregateId");
 
-                    b.ToTable("user_aggregate", "users");
+                    b.ToTable("user_aggregate", (string)null);
                 });
 
             modelBuilder.Entity("User.domain.model.UserEntity", b =>
                 {
-                    b.Property<Guid>("UserId")
+                    b.Property<long>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
+                        .HasColumnType("bigint")
                         .HasColumnName("user_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("UserId"));
 
                     b.Property<int>("Age")
                         .HasColumnType("integer")
@@ -72,15 +73,17 @@ namespace User.Infrastructure.Migrations
                     b.HasIndex("AggregateId")
                         .IsUnique();
 
-                    b.ToTable("user", "users");
+                    b.ToTable("user", (string)null);
                 });
 
             modelBuilder.Entity("User.domain.model.UserSalt", b =>
                 {
-                    b.Property<Guid>("SaltId")
+                    b.Property<long>("SaltId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
+                        .HasColumnType("bigint")
                         .HasColumnName("salt_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("SaltId"));
 
                     b.Property<Guid>("AggregateId")
                         .HasColumnType("uuid")
@@ -96,7 +99,7 @@ namespace User.Infrastructure.Migrations
                     b.HasIndex("AggregateId")
                         .IsUnique();
 
-                    b.ToTable("user_salt", "users");
+                    b.ToTable("user_salt", (string)null);
                 });
 
             modelBuilder.Entity("User.domain.model.UserEntity", b =>
