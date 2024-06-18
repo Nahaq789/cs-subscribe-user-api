@@ -9,8 +9,13 @@ internal class UserConfiguration : IEntityTypeConfiguration<UserEntity>
     public void Configure(EntityTypeBuilder<UserEntity> userEntityConfiguration)
     {
         userEntityConfiguration.ToTable("user");
-        userEntityConfiguration.Property(u => u.Id).UseHiLo("userseq");
+        //userEntityConfiguration.Property(u => u.Id).UseHiLo("userseq");
         userEntityConfiguration.Ignore(b => b.DomainEvents);
+
+        userEntityConfiguration.Property(p => p.UserId)
+            .HasColumnName("user_id")
+            .IsRequired();
+        userEntityConfiguration.HasKey(p => p.UserId);
 
         userEntityConfiguration.Property(e => e.Email)
             .HasColumnName("email")
@@ -25,5 +30,13 @@ internal class UserConfiguration : IEntityTypeConfiguration<UserEntity>
         userEntityConfiguration.Property(e => e.Age)
             .HasColumnName("age")
             .IsRequired();
+
+        userEntityConfiguration.Property(e => e.AggregateId)
+            .HasColumnName("user_aggregate_id")
+            .IsRequired();
+        userEntityConfiguration.HasOne<UserAggregate>()
+            .WithOne()
+            .HasForeignKey<UserEntity>(f => f.AggregateId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

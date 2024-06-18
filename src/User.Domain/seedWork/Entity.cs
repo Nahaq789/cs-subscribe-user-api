@@ -4,20 +4,20 @@ namespace User.Domain.seedWork;
 
 public abstract class Entity
 {
-    private int? _requestedHashCode;
-    private int _Id;
+    // private int? _requestedHashCode;
+    // private int _Id;
 
-    public virtual int Id
-    {
-        get
-        {
-            return _Id;
-        }
-        protected set
-        {
-            _Id = value;
-        }
-    }
+    // public virtual int Id
+    // {
+    //     get
+    //     {
+    //         return _Id;
+    //     }
+    //     protected set
+    //     {
+    //         _Id = value;
+    //     }
+    // }
 
     private List<INotification>? _domainEvents;
     public IReadOnlyCollection<INotification>? DomainEvents => _domainEvents?.AsReadOnly();
@@ -35,10 +35,5 @@ public abstract class Entity
     public void ClearDomainEvents()
     {
         _domainEvents?.Clear();
-    }
-
-    public bool IsTransient()
-    {
-        return this.Id == default;
     }
 }

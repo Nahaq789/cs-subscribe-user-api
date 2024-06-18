@@ -9,11 +9,13 @@ namespace User.domain.model;
 /// </summary>
 public class UserEntity : Entity
 {
+    public Guid UserId { get; private set; }
     /// <summary>
-    /// 主キー ユーザーID
+    /// ユーザー名
     /// </summary>
-    [Key]
-    public long UserId { get; private set; }
+    [Required]
+    [StringLength(20)]
+    public string Name { get; private set; }
 
     /// <summary>
     /// メールアドレス
@@ -35,18 +37,24 @@ public class UserEntity : Entity
     [Required]
     public int Age { get; private set; }
 
+    [Required]
+    public Guid AggregateId { get; private set; }
+
     /// <summary>
     /// コンストラクタ
     /// </summary>
-    /// <param name="userId">ユーザーID</param>
     /// <param name="email">メールアドレス</param>
     /// <param name="password">パスワード</param>
     /// <param name="age">年齢</param>
-    public UserEntity(long userId, string email, string password, int age)
+    public UserEntity(Guid userId, string name, string email, string password, int age, Guid aggregateId)
     {
         this.UserId = userId;
+        this.Name = name;
         this.Email = email;
         this.Password = password;
         this.Age = age;
+        this.AggregateId = aggregateId;
     }
+
+    public UserEntity() { }
 }

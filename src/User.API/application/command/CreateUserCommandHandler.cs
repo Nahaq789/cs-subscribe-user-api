@@ -7,7 +7,7 @@ namespace User.API.application.command;
 /// <summary>
 /// ユーザー作成コマンドハンドラーです。
 /// </summary>
-public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Guid>
+public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, bool>
 {
     private readonly IUserRepository _userRepository;
     private readonly ICryptoPasswordService _cryptoPasswordService;
@@ -16,7 +16,8 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Guid>
     /// コンストラクタ
     /// </summary>
     /// <param name="userRepository">ユーザーリポジトリ</param>
-    public CreateUserCommandHandler(IUserRepository userRepository, ICryptoPasswordService cryptoPasswordService) {
+    public CreateUserCommandHandler(IUserRepository userRepository, ICryptoPasswordService cryptoPasswordService)
+    {
         this._userRepository = userRepository;
         this._cryptoPasswordService = cryptoPasswordService;
     }
@@ -27,16 +28,14 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Guid>
     /// <param name="command">ユーザー作成コマンド。</param>
     /// <param name="cancellationToken">キャンセレーショントークン。</param>
     /// <returns>作成されたユーザーのID。</returns>
-    public async Task<Guid> Handle(CreateUserCommand command, CancellationToken cancellationToken)
+    public async Task<bool> Handle(CreateUserCommand command, CancellationToken cancellationToken)
     {
+        var userAggregate = new UserAggregate(Guid.NewGuid());
         var salt = _cryptoPasswordService.CreateSalt();
-        var User = new UserEntity(
-            command.UserId, 
-            command.Email, 
-            _cryptoPasswordService.HashPassword(command.Password, salt), 
-            command.Age);
-        
-        await _userRepository.CreateUser(User);
-        return Guid.NewGuid();
+
+        userAggregate.setUser(Guid.NewGuid(), command.Name, command.Email, command.Password, command.Age, userAggregate.UserAggregateId);
+        userAggregate.setSalt(Guid.NewGuid(), salt, userAggregate.UserAggregateId);
+        await _userRepository.CreateUser(userAggregate);
+        return await _userRepository.UnitOfWork.SaveEntityAsync(cancellationToken);
     }
 }

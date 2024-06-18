@@ -12,7 +12,7 @@ using User.API.infrastructure;
 namespace User.Infrastructure.Migrations
 {
     [DbContext(typeof(UserContext))]
-    [Migration("20240610223422_init")]
+    [Migration("20240618222052_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -20,6 +20,7 @@ namespace User.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("users")
                 .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -30,46 +31,38 @@ namespace User.Infrastructure.Migrations
                     b.Property<Guid>("UserAggregateId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
-                        .HasColumnName("user_aggregate_id")
-                        .HasDefaultValueSql("gen_random_uuid()");
-
-                    b.Property<long>("SaltId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("salt_id");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("user_id");
+                        .HasColumnName("user_aggregate_id");
 
                     b.HasKey("UserAggregateId");
 
-                    b.HasIndex("SaltId")
-                        .IsUnique();
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("user_aggregate", (string)null);
+                    b.ToTable("user_aggregate", "users");
                 });
 
             modelBuilder.Entity("User.domain.model.UserEntity", b =>
                 {
-                    b.Property<long>("UserId")
+                    b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("uuid")
                         .HasColumnName("user_id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("UserId"));
 
                     b.Property<int>("Age")
                         .HasColumnType("integer")
                         .HasColumnName("age");
+
+                    b.Property<Guid>("AggregateId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_aggregate_id");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("character varying(30)")
                         .HasColumnName("email");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -79,46 +72,41 @@ namespace User.Infrastructure.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("user", (string)null);
+                    b.HasIndex("AggregateId")
+                        .IsUnique();
+
+                    b.ToTable("user", "users");
                 });
 
             modelBuilder.Entity("User.domain.model.UserSalt", b =>
                 {
-                    b.Property<long>("SaltId")
+                    b.Property<Guid>("SaltId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("uuid")
                         .HasColumnName("salt_id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("SaltId"));
+                    b.Property<Guid>("AggregateId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_aggregate_id");
 
                     b.Property<string>("Salt")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("salt");
 
-                    b.Property<Guid>("UserAggregateId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("user_aggregate_id");
-
                     b.HasKey("SaltId");
 
-                    b.HasIndex("UserAggregateId")
+                    b.HasIndex("AggregateId")
                         .IsUnique();
 
-                    b.ToTable("user_salt", (string)null);
+                    b.ToTable("user_salt", "users");
                 });
 
-            modelBuilder.Entity("User.domain.model.UserAggregate", b =>
+            modelBuilder.Entity("User.domain.model.UserEntity", b =>
                 {
-                    b.HasOne("User.domain.model.UserSalt", null)
-                        .WithOne()
-                        .HasForeignKey("User.domain.model.UserAggregate", "SaltId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("User.domain.model.UserEntity", null)
-                        .WithOne()
-                        .HasForeignKey("User.domain.model.UserAggregate", "UserId")
+                    b.HasOne("User.domain.model.UserAggregate", null)
+                        .WithOne("User")
+                        .HasForeignKey("User.domain.model.UserEntity", "AggregateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -126,9 +114,18 @@ namespace User.Infrastructure.Migrations
             modelBuilder.Entity("User.domain.model.UserSalt", b =>
                 {
                     b.HasOne("User.domain.model.UserAggregate", null)
-                        .WithOne()
-                        .HasForeignKey("User.domain.model.UserSalt", "UserAggregateId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithOne("Salt")
+                        .HasForeignKey("User.domain.model.UserSalt", "AggregateId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("User.domain.model.UserAggregate", b =>
+                {
+                    b.Navigation("Salt")
+                        .IsRequired();
+
+                    b.Navigation("User")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

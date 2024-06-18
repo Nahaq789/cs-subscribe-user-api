@@ -1,10 +1,12 @@
+using User.Domain.seedWork;
+
 namespace User.domain.model;
 
 /// <summary>
 /// ユーザーリポジトリです。
 /// </summary>
-public interface IUserRepository
+public interface IUserRepository : IRepository<UserAggregate>
 {
-    Task CreateUser(UserEntity userEntity);
-    Task UpdateUser(UserEntity userEntity);
+    Task CreateUser(UserAggregate userEntity);
+    void UpdateUser(UserAggregate userEntity);
 }

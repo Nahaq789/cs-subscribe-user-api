@@ -36,16 +36,33 @@
    ```
 
 # マイグレーション
-1. User.APIディレクトリで以下のコマンドを実行
+
+1. User.API ディレクトリで以下のコマンドを実行
 
    ```bash
    dotnet ef migrations add init --project ../User.Infrastructure/User.Infrastructure.csproj
    ```
-   Migrationフォルダが作成される。
 
-2. 作成された内容をDBに反映する
+   Migration フォルダが作成される。
+
+2. 作成された内容を DB に反映する
 
    ```bash
    dotnet ef database update --project ../User.Infrastructure/User.Infrastructure.csproj
    ```
 
+# マイグレーション削除方法
+
+1. DB で以下のコマンドを実行しマイグレーションの履歴を削除する
+
+   ```
+   delete from "__EFMigrationsHistory"
+   ```
+
+   特定のマイグレーションを削除したい場合は、マイグレーション ID を指定する
+
+2. User.API ディレクトリで以下のコマンドを実行
+
+   ```
+   dotnet ef migrations remove --project ../User.Infrastructure/User.Infrastructure.csproj
+   ```
