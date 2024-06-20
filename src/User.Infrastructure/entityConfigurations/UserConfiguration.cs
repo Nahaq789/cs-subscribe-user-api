@@ -25,7 +25,7 @@ internal class UserConfiguration : IEntityTypeConfiguration<UserEntity>
 
         userEntityConfiguration.Property(e => e.Password)
             .HasColumnName("password")
-            .HasMaxLength(20)
+            .HasMaxLength(50)
             .IsRequired();
 
         userEntityConfiguration.Property(e => e.Age)
