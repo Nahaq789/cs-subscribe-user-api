@@ -10,15 +10,17 @@ namespace User.API.application.command;
 public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, bool>
 {
     private readonly IUserRepository _userRepository;
+    private readonly IMediator _mediator;
     private readonly ICryptoPasswordService _cryptoPasswordService;
 
     /// <summary>
     /// コンストラクタ
     /// </summary>
     /// <param name="userRepository">ユーザーリポジトリ</param>
-    public CreateUserCommandHandler(IUserRepository userRepository, ICryptoPasswordService cryptoPasswordService)
+    public CreateUserCommandHandler(IUserRepository userRepository, IMediator mediator, ICryptoPasswordService cryptoPasswordService)
     {
         this._userRepository = userRepository;
+        this._mediator = mediator;
         this._cryptoPasswordService = cryptoPasswordService;
     }
 
@@ -27,14 +29,14 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, bool>
     /// </summary>
     /// <param name="command">ユーザー作成コマンド。</param>
     /// <param name="cancellationToken">キャンセレーショントークン。</param>
-    /// <returns>作成されたユーザーのID。</returns>
+    /// <returns>真偽値</returns>
     public async Task<bool> Handle(CreateUserCommand command, CancellationToken cancellationToken)
     {
         var userAggregate = new UserAggregate(Guid.NewGuid());
-        var salt = _cryptoPasswordService.CreateSalt();
+        var cryptoRecord = await Task.Run(() => _cryptoPasswordService.HashPassword(command.Password));
 
-        userAggregate.setUser(command.Name, command.Email, command.Password, command.Age, userAggregate.UserAggregateId);
-        userAggregate.setSalt(salt, userAggregate.UserAggregateId);
+        userAggregate.setUser(command.Name, command.Email, cryptoRecord.Password, command.Age, userAggregate.UserAggregateId);
+        userAggregate.setSalt(cryptoRecord.Salt, userAggregate.UserAggregateId);
         await _userRepository.CreateUser(userAggregate);
         return await _userRepository.UnitOfWork.SaveEntityAsync(cancellationToken);
     }
