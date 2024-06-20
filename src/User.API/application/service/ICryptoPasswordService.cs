@@ -10,7 +10,7 @@ public interface ICryptoPasswordService
     /// </summary>
     /// <param name="password">パスワード</param>
     /// <param name="salt">ソルト</param>
-    string HashPassword(string password, string salt);
+    Task<(string Password, string Salt)> HashPassword(string password);
 
     /// <summary>
     /// ソルトを生成します。

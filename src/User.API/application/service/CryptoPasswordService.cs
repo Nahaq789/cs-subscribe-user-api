@@ -24,8 +24,9 @@ public class CryptoPasswordService : ICryptoPasswordService
     /// <param name="password">パスワード</param>
     /// <param name="salt">ソルト</param>
     /// <returns>暗号化された文字列</returns>
-    public string HashPassword(string password, string salt)
+    public async Task<(string Password, string Salt)> HashPassword(string password)
     {
+        var salt = CreateSalt();
         byte[] salts = Convert.FromBase64String(salt);
         var hash = KeyDerivation.Pbkdf2(
             password,
@@ -34,7 +35,7 @@ public class CryptoPasswordService : ICryptoPasswordService
             IterationCount,
             NumBytesRequested
         );
-        return Convert.ToBase64String(hash);
+        return await Task.Run(() => (Convert.ToBase64String(hash), salt));
     }
 
     /// <summary>
