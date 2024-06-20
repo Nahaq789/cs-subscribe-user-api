@@ -9,26 +9,26 @@ namespace User.domain.model;
 /// </summary>
 public class UserEntity : Entity
 {
+    /// <summary>
+    /// ユーザーID
+    /// </summary>
     public long UserId { get; private set; }
     /// <summary>
     /// ユーザー名
     /// </summary>
     [Required]
-    [StringLength(20)]
     public string Name { get; private set; }
 
     /// <summary>
     /// メールアドレス
     /// </summary>
     [Required]
-    [StringLength(30)]
     public string Email { get; private set; }
 
     /// <summary>
     /// パスワード
     /// </summary>
     [Required]
-    [StringLength(20)]
     public string Password { get; private set; }
 
     /// <summary>
@@ -46,9 +46,9 @@ public class UserEntity : Entity
     /// <param name="email">メールアドレス</param>
     /// <param name="password">パスワード</param>
     /// <param name="age">年齢</param>
+    /// <param name="aggregateId">集約ID</param>
     public UserEntity(string name, string email, string password, int age, Guid aggregateId)
     {
-        //this.UserId = userId;
         this.Name = name;
         this.Email = email;
         this.Password = password;
@@ -56,5 +56,7 @@ public class UserEntity : Entity
         this.AggregateId = aggregateId;
     }
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     public UserEntity() { }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 }

@@ -25,6 +25,10 @@ public class UserAggregate : Entity, IAggregateRoot
     private UserSalt _salt;
     public UserSalt Salt => _salt;
 
+    /// <summary>
+    /// コンストラクタ
+    /// </summary>
+    /// <param name="userAggregateId">ユーザー集約ID</param>
     public UserAggregate(Guid userAggregateId) : this()
     {
         this.UserAggregateId = userAggregateId;
