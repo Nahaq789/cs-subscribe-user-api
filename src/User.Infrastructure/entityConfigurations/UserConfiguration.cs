@@ -18,8 +18,13 @@ internal class UserConfiguration : IEntityTypeConfiguration<UserEntity>
             .IsRequired();
         userEntityConfiguration.HasKey(p => p.UserId);
 
+        userEntityConfiguration.Property(e => e.Name)
+            .HasColumnName("name")
+            .HasMaxLength(20)
+            .IsRequired();
+
         userEntityConfiguration.Property(e => e.Email)
-            .HasColumnName("email")
+            .HasColumnName("email22")
             .HasMaxLength(30)
             .IsRequired();
 
