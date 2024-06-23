@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 using User.API.application.service;
 using User.API.infrastructure;
 using User.domain.model;
@@ -15,8 +16,10 @@ public static class Extensions
 
         builder.Services.AddDbContextPool<UserContext>((serviceProvider, option) =>
         {
-            option.UseNpgsql(connectionString);
+            option.UseNpgsql(connectionString, (m) => m.MigrationsAssembly("User.Infrastructure"));
         });
+
+        builder.Services.AddMigration<UserContext>();
 
         var services = builder.Services;
         services.AddMediatR((cfg) =>
