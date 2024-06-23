@@ -3,6 +3,31 @@ services:
   app:
     container_name: cs-subscribe-user-api
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: User.API/Dockerfile
+    networks:
+      - cs-subscribe
+    ports:
+      - "8081:8080"
     tty: true
+    depends_on:
+      - cs-subscribe-user-db
+
+  cs-subscribe-user-db:
+    container_name: user-publish-db
+    image: postgres:alpine3.20
+    environment:
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "root"
+      POSTGRES_PORT: 5433
+    command: -p 5433
+    networks:
+      - cs-subscribe
+    volumes:
+      - ./postgres:/app/user_api
+    ports:
+      - 5433:5433
+
+networks:
+  cs-subscribe:
+    external: true
