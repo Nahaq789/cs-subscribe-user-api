@@ -24,7 +24,7 @@ internal class UserConfiguration : IEntityTypeConfiguration<UserEntity>
             .IsRequired();
 
         userEntityConfiguration.Property(e => e.Email)
-            .HasColumnName("email22")
+            .HasColumnName("email")
             .HasMaxLength(30)
             .IsRequired();
 
