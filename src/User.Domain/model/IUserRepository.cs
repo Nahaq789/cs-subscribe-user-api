@@ -7,6 +7,7 @@ namespace User.domain.model;
 /// </summary>
 public interface IUserRepository : IRepository<UserAggregate>
 {
-    Task CreateUser(UserAggregate userEntity);
-    void UpdateUser(UserAggregate userEntity);
+    Task<UserAggregate> FindUserByAggregateId(Guid userAggregateId);
+    Task CreateAsync(UserAggregate user);
+    void Update(UserAggregate user);
 }
