@@ -56,6 +56,12 @@ public class UserEntity : Entity
         this.AggregateId = aggregateId;
     }
 
+    public void UpdateDetails(string name, int age)
+    {
+        this.Name = name;
+        this.Age = age;
+    }
+
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     public UserEntity() { }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.

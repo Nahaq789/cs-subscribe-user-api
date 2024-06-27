@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using User.Domain.exceptions;
 using User.Domain.seedWork;
 
 namespace User.domain.model;
@@ -48,6 +49,15 @@ public class UserAggregate : Entity, IAggregateRoot
     {
         var salt = new UserSalt(Salt, aggregateId);
         this._salt = salt;
+    }
+
+    public void UpdateUserEntity(string name, int age)
+    {
+        if (this._user == null)
+        {
+            throw new UserDomainException($"集約ID: {this._user?.AggregateId} が見つかりませんでした。");
+        }
+        this._user.UpdateDetails(name, age);
     }
 
     // マイグレーション時のみコメントアウト外す
