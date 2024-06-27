@@ -12,15 +12,24 @@ public class UserRepository : IUserRepository
 
     public UserRepository(UserContext userContext) => this._userContext = userContext;
 
-
-    public async Task CreateUser(UserAggregate userEntity)
+    public async Task<UserAggregate> FindUserByAggregateId(Guid aggregateId)
     {
-        await _userContext.UserAggregates.AddAsync(userEntity);
+        var result = await _userContext.UserAggregates
+            .Include(e => e.User)
+            .Include(e => e.Salt)
+            .FirstOrDefaultAsync(p => p.UserAggregateId == aggregateId);
+#pragma warning disable CS8603 // Possible null reference return.
+        return result;
+#pragma warning restore CS8603 // Possible null reference return.
     }
 
-    public void UpdateUser(UserAggregate userEntity)
+    public async Task CreateAsync(UserAggregate user)
     {
-        //_userContext.User.Attach(userEntity);
-        _userContext.Entry(userEntity).State = EntityState.Modified;
+        await _userContext.UserAggregates.AddAsync(user);
+    }
+
+    public void Update(UserAggregate user)
+    {
+        _userContext.UserAggregates.Update(user);
     }
 }
