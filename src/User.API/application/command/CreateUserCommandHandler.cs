@@ -37,7 +37,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, bool>
 
         userAggregate.setUser(command.Name, command.Email, cryptoRecord.Password, command.Age, userAggregate.UserAggregateId);
         userAggregate.setSalt(cryptoRecord.Salt, userAggregate.UserAggregateId);
-        await _userRepository.CreateUser(userAggregate);
+        await _userRepository.CreateAsync(userAggregate);
         return await _userRepository.UnitOfWork.SaveEntityAsync(cancellationToken);
     }
 }
