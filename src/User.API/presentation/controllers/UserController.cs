@@ -43,4 +43,39 @@ public class UserController
 
         return TypedResults.Ok();
     }
+
+    /// <summary>
+    /// ユーザー内容変更時のエンドポイントです
+    /// </summary>
+    ///<param name="command">ユーザーアップデートコマンド</param>
+    ///<param name="requestId">リクエストID</param>
+    [HttpPost("update")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<Results<Ok, BadRequest<string>, ProblemHttpResult>> UpdateUserAsync(
+        [FromHeader(Name = "x-requestId")] Guid requestId,
+        [FromBody] UserUpdateCommand command
+    )
+    {
+        if (requestId == Guid.Empty)
+        {
+            return TypedResults.BadRequest("リクエストIDが無効です");
+        }
+        try
+        {
+            _logger.LogInformation($"Sending Command {command}");
+            var result = await _mediator.Send(command);
+
+            if (!result)
+            {
+                return TypedResults.Problem(detail: "ユーザーの変更に失敗しました。", statusCode: 500);
+            }
+            return TypedResults.Ok();
+        }
+        catch (Exception ex)
+        {
+            return TypedResults.Problem(detail: ex.InnerException?.Message ?? ex.Message, statusCode: 500);
+        }
+
+    }
 }
