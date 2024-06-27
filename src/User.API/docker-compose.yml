@@ -1,7 +1,7 @@
 version: "3.8"
 services:
-  app:
-    container_name: cs-subscribe-user-api
+  cs-subscribe-user-api:
+    container_name: user-api
     build:
       context: ..
       dockerfile: User.API/Dockerfile
