@@ -1,6 +1,8 @@
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using User.API.application.service;
+using User.API.behaviors;
 using User.API.infrastructure;
 using User.domain.model;
 using User.Infrastructure.repository;
@@ -25,6 +27,7 @@ public static class Extensions
         services.AddMediatR((cfg) =>
         {
             cfg.RegisterServicesFromAssemblyContaining(typeof(Program));
+            cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(JwtTokenAuthenticationBehavior<,>));
         });
 
         builder.Services.AddTransient<IUserRepository, UserRepository>();

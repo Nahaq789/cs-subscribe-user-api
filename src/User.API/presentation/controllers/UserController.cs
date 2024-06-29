@@ -23,6 +23,7 @@ public class UserController
     /// </summary>
     ///<param name="command">ユーザー作成コマンド</param>
     ///<param name="requestId">リクエストID</param>
+    [skip]
     [HttpPost("create")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
