@@ -17,8 +17,8 @@ DDD + CQRS
 ### 認証方式
 
 - トークン による認証
-  - 各リクエストに トークン をヘッダーに含める
-  - API側でトークンを復元する。
+  - 各リクエストに JWT トークンとリフレッシュトークン をヘッダーに含める
+  - API 側でトークンを復元する。
 
 ## エンドポイント
 
@@ -26,28 +26,24 @@ Route: api/v1/[controller 名]
 
 - create
 - update
-- delete
-- get
 
 #### リクエスト
 
 - `GET /api/v1/get/{id}`
 - `POST /api/v1/create`
-- `PUT /api/v1/update`
-- `DELETE /api/v1/delete`
 
 #### パラメータ
 
 #### GET
 
-| key | value |
-| --- | ----- |
+| key | value  |
+| --- | ------ |
 | id  | UserId |
 
 #### POST
 
-| key | value |
-| --- | ----- |
+| key | value  |
+| --- | ------ |
 | id  | UserId |
 
 #### レスポンス
