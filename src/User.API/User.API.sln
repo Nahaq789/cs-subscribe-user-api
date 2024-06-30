@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User.Domain", "..\User.Doma
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User.Infrastructure", "..\User.Infrastructure\User.Infrastructure.csproj", "{2F1DA706-20B8-46E6-8EA1-E6267B62FB21}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User.API.Test", "..\..\test\User.API.Test\User.API.Test.csproj", "{A28A218A-A9C0-4B07-A758-2D5D1C51E988}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{2F1DA706-20B8-46E6-8EA1-E6267B62FB21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F1DA706-20B8-46E6-8EA1-E6267B62FB21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F1DA706-20B8-46E6-8EA1-E6267B62FB21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A28A218A-A9C0-4B07-A758-2D5D1C51E988}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A28A218A-A9C0-4B07-A758-2D5D1C51E988}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A28A218A-A9C0-4B07-A758-2D5D1C51E988}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A28A218A-A9C0-4B07-A758-2D5D1C51E988}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
