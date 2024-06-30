@@ -12,6 +12,18 @@ public class UserRepository : IUserRepository
 
     public UserRepository(UserContext userContext) => this._userContext = userContext;
 
+    public async Task<UserAggregate> FindUserByEmail(string email)
+    {
+        var result = await _userContext.UserAggregates
+            .Include(e => e.User)
+            .Include(e => e.Salt)
+            .FirstOrDefaultAsync(e => e.User.Email == email);
+
+#pragma warning disable CS8603 // Possible null reference return.
+        return result;
+#pragma warning restore CS8603 // Possible null reference return.
+    }
+
     public async Task<UserAggregate> FindUserByAggregateId(Guid aggregateId)
     {
         var result = await _userContext.UserAggregates
