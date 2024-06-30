@@ -33,6 +33,5 @@ public static class Extensions
         builder.Services.AddTransient<IUserRepository, UserRepository>();
         builder.Services.AddTransient<ICryptoPasswordService, CryptoPasswordService>();
         builder.Services.AddTransient<IJwtTokenService, JwtTokenService>();
-
     }
 }

@@ -1,8 +1,4 @@
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using Npgsql.Replication;
-using System;
 using System.Security.Cryptography;
 
 namespace User.API.application.service;
