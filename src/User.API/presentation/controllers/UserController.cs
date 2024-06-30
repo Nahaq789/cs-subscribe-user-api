@@ -1,7 +1,9 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using User.API.application.command;
+using User.API.application.extensions.attribute;
 
 namespace User.API.application.presentation.controllers;
 
@@ -23,7 +25,6 @@ public class UserController
     /// </summary>
     ///<param name="command">ユーザー作成コマンド</param>
     ///<param name="requestId">リクエストID</param>
-    [skip]
     [HttpPost("create")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

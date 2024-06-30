@@ -15,17 +15,15 @@ public class JwtTokenService : IJwtTokenService
     public bool ValidateJwtToken(string token)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
-#pragma warning disable CS8604 // Possible null reference argument.
-        var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]);
-#pragma warning restore CS8604 // Possible null reference argument.
+        var Token = token.Replace("Bearer", "").Trim();
 
         try
         {
-            tokenHandler.ValidateToken(token, new TokenValidationParameters
+            tokenHandler.ValidateToken(Token, new TokenValidationParameters
             {
                 ValidIssuer = _configuration["Jwt:Issuer"],
                 ValidAudience = _configuration["Jwt:Audience"],
-                IssuerSigningKey = new SymmetricSecurityKey(key),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetValue<string>("Jwt:Jwt_Key") ?? string.Empty)),
                 ValidateIssuer = true,
                 ValidateAudience = true,
                 ValidateLifetime = true,

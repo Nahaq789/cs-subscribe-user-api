@@ -1,3 +1,4 @@
+using System.Reflection.Metadata.Ecma335;
 using MediatR;
 using User.API.application.service;
 
@@ -17,6 +18,8 @@ public class JwtTokenAuthenticationBehavior<TRequest, TResponse> : IPipelineBeha
 
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
+        var requestUrl = _httpContextAccessor.HttpContext.Request.Path;
+        if (requestUrl == "/api/v1/User/create") return await next();
         string? token = _httpContextAccessor.HttpContext?.Request.Headers["Authorization"];
         if (string.IsNullOrEmpty(token) || !_jwtTokenService.ValidateJwtToken(token))
         {
