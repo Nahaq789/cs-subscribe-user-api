@@ -4,11 +4,11 @@
 
 ### 目的
 
-この API は、ユーザの登録やログインの処理を行います。
+この API は、ユーザの登録や編集を行います。
 
 ### アーキテクチャ概要
 
-DDD + CQRS
+DDD + CQRS + Mediator
 
 ## 認証と認可
 
@@ -17,50 +17,50 @@ DDD + CQRS
 ### 認証方式
 
 - トークン による認証
-  - 各リクエストに JWT トークンとリフレッシュトークン をヘッダーに含める
-  - API 側でトークンを復元する。
+- 各リクエストに JWT トークンとリフレッシュトークン をヘッダーに含める
+- API 側でトークンを復元する。
 
 ## エンドポイント
 
-Route: api/v1/[controller 名]
+Route: api/v1/User/[controller 名]
 
 - create
 - update
 
 #### リクエスト
 
-- `GET /api/v1/get/{id}`
-- `POST /api/v1/create`
+- `/api/v1/create`
+- `/api/v1/update`
 
-#### パラメータ
+- URL: `/api/v1/create`
+- メソッド: POST
+- パラメータ:
+  - `command`: ユーザー作成コマンド
+  - `requestId`: リクエスト ID
+  - `Authorization`: Bearer JWT トークン
 
-#### GET
+```
+{
+    "name": "satoshi56",
+    "email": "satoshi@example.com",
+    "password": "satoshi",
+    "age": 10
+}
+```
 
-| key | value  |
-| --- | ------ |
-| id  | UserId |
+---
 
-#### POST
+- URL: `/api/v1/update`
+- メソッド: POST
+- パラメータ:
+  - `command`: ユーザーアップデートコマンド
+  - `requestId`: リクエスト ID
+  - `Authorization`: Bearer JWT トークン
 
-| key | value  |
-| --- | ------ |
-| id  | UserId |
-
-#### レスポンス
-
-```json
-[
-  {
-    "id": 1,
-    "name": "山田太郎",
-    "tel": "090-1234-5678",
-    "email": "taro@example.com"
-  },
-  {
-    "id": 2,
-    "name": "鈴木花子",
-    "tel": "080-9876-5432",
-    "email": "hanako@example.com"
-  }
-]
+```
+{
+    "aggregateId": "dd102ae6-0b82-4517-a590-abc9bd64c124",
+    "name": "pikachu",
+    "age": 11
+}
 ```
