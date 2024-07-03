@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using User.API.exceptions;
 
 namespace User.API.application.service;
 public class JwtTokenService : IJwtTokenService
@@ -15,6 +16,11 @@ public class JwtTokenService : IJwtTokenService
     public bool ValidateJwtToken(string token)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
+        if (!token.Contains("Bearer"))
+        {
+            throw new JwtTokenException("Bearer識別子が無効です。");
+        }
+
         var Token = token.Replace("Bearer", "").Trim();
 
         try
